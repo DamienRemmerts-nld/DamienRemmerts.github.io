@@ -1,0 +1,23 @@
+[
+  {
+    "file": "image_1.jpg",
+    "title": "Milky Way over the ridge",
+    "category": "Night sky",
+    "info": "14mm · f/2.8 · 20s · ISO 3200",
+    "cs": 2,
+    "rs": 2
+  },
+  {
+    "file": "low-tide.jpg",
+    "title": "Low tide at dawn",
+    "category": "Ocean",
+    "info": "24mm · f/11 · 1/60"
+  },
+  {
+    "file": "star-trails.jpg",
+    "title": "Star trails",
+    "category": "Night sky",
+    "info": "20mm · f/2.8 · 90 min stack",
+    "rs": 2
+  }
+]

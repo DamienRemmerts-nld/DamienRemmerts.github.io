@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="stars">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your Name – Photography & Code</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --head:"Syne","Helvetica Neue",Arial,sans-serif; --body:"Figtree",system-ui,sans-serif;
+  color-scheme:dark; box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#070b1f; --bg2:#141a4a; --ink:#eef0ff; --soft:#a9b0dd; --accent:#f3d98b; --accent2:#9b8cff; --panel:rgba(20,26,74,.55); --line:rgba(169,176,221,.28);
+}
+:root[data-theme="ocean"]{
+  --bg:#031a24; --bg2:#06475a; --ink:#e8fbfa; --soft:#9ed3d3; --accent:#6fe3d4; --accent2:#4aa8e8; --panel:rgba(6,71,90,.5); --line:rgba(158,211,211,.3);
+}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;color:var(--ink);font:1.075rem/1.65 var(--body);background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%) fixed;min-height:100vh;transition:background .6s}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+#fx{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 1.25rem}
+
+/* nav */
+nav{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:20;background:linear-gradient(var(--bg),transparent);}
+nav .wrap{display:flex;align-items:center;gap:.25rem;padding-top:.75rem;padding-bottom:.75rem;overflow-x:auto}
+nav a{font:700 .95rem var(--head);color:var(--ink);text-decoration:none;padding:.4rem .9rem;border-radius:999px;white-space:nowrap}
+nav a:hover{background:var(--panel)}
+nav .logo{margin-right:auto;font-weight:800;color:var(--accent)}
+.switch{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--panel);margin-left:.5rem}
+.switch button{font:700 .85rem var(--head);border:0;background:none;color:var(--soft);padding:.3rem .8rem;border-radius:999px;cursor:pointer}
+.switch button[aria-pressed="true"]{background:var(--accent);color:var(--bg)}
+
+/* hero */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:grid;align-content:center;padding:6rem 0 7rem;z-index:1}
+h1{font:800 clamp(3.2rem,12vw,9rem)/.92 var(--head);letter-spacing:-.045em;margin:0;background:linear-gradient(100deg,var(--ink),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:32rem;font-size:1.25rem;color:var(--soft);margin:1.5rem 0 2rem}
+.btn{display:inline-block;font:700 1rem var(--head);background:var(--accent);color:var(--bg);padding:.75rem 1.5rem;border-radius:999px;text-decoration:none;margin-right:.6rem}
+.btn.ghost{background:none;color:var(--ink);border:1px solid var(--line)}
+.horizon{position:absolute;left:0;right:0;bottom:0;height:90px;z-index:1;pointer-events:none;overflow:hidden}
+.horizon svg{position:absolute;bottom:0;width:200%;height:100%}
+.mtn{display:block;fill:var(--bg)}.wave{display:none;fill:var(--bg)}
+[data-theme="ocean"] .mtn{display:none}[data-theme="ocean"] .wave{display:block;animation:drift 14s linear infinite}
+@keyframes drift{to{transform:translateX(-50%)}}
+
+/* sections */
+section.s{position:relative;z-index:1;padding:4.5rem 0}
+h2{font:800 clamp(2rem,5vw,3.2rem)/1.05 var(--head);letter-spacing:-.03em;margin:0 0 .5rem}
+.lead{color:var(--soft);max-width:34rem;margin:0 0 2rem}
+h3{font:700 1.2rem var(--head);margin:0 0 .3rem}
+
+/* gallery */
+.filters{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
+.filters button{font:700 .9rem var(--head);border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;padding:.4rem 1.1rem;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.mosaic{display:grid;gap:.75rem;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));grid-auto-rows:150px;grid-auto-flow:dense}
+.shot{position:relative;border:0;padding:0;cursor:zoom-in;border-radius:14px;overflow:hidden;grid-row:span var(--rs);grid-column:span var(--cs);color:var(--ink);text-align:left;font:inherit;transition:transform .25s}
+.shot:hover{transform:scale(1.015)}
+.shot span{position:absolute;left:0;right:0;bottom:0;padding:2rem .9rem .7rem;background:linear-gradient(transparent,rgba(0,0,0,.65));font:700 .95rem var(--head);opacity:0;transition:opacity .25s}
+.shot:hover span,.shot:focus-visible span{opacity:1}
+@media(max-width:600px){.shot{grid-column:span 1!important}.shot span{opacity:1}}
+dialog{border:1px solid var(--line);border-radius:16px;padding:0;background:var(--bg);color:var(--ink);max-width:min(900px,94vw);width:100%;overflow:hidden}
+dialog::backdrop{background:rgba(0,0,0,.8)}
+#lbImg{aspect-ratio:3/2;max-height:75vh;width:100%}
+.info{padding:1rem 1.25rem;display:flex;justify-content:space-between;gap:1rem;align-items:flex-start}
+.info p{margin:0;color:var(--soft)}
+.close{font:700 .95rem var(--head);border:1px solid var(--line);background:none;color:var(--ink);border-radius:999px;padding:.35rem 1rem;cursor:pointer}
+
+/* about */
+.about{display:grid;gap:2.5rem;align-items:start}
+@media(min-width:800px){.about{grid-template-columns:340px 1fr}}
+.portrait{aspect-ratio:4/5;border-radius:999px 999px 18px 18px;background:linear-gradient(160deg,var(--accent2),var(--bg2));border:1px solid var(--line);display:grid;place-items:center;text-align:center;padding:1.5rem;font:700 1rem var(--head)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.75rem;margin-top:1.5rem}
+.facts div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:.8rem 1rem;backdrop-filter:blur(6px)}
+.facts b{display:block;font:700 .9rem var(--head);color:var(--accent)}
+
+/* skills */
+.cols{display:grid;gap:2.5rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.skill{display:flex;justify-content:space-between;align-items:center;padding:.65rem 0;border-bottom:1px solid var(--line)}
+.dots{display:flex;gap:5px}.dots i{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--accent)}.dots i.on{background:var(--accent)}
+
+/* coding */
+.term{border:1px solid var(--line);border-radius:14px;background:rgba(3,8,20,.7);overflow:hidden;backdrop-filter:blur(6px)}
+.term .bar{display:flex;gap:6px;padding:.6rem .9rem;border-bottom:1px solid var(--line)}
+.term .bar i{width:10px;height:10px;border-radius:50%;background:var(--soft);opacity:.5}
+.term .body{padding:1.1rem 1.25rem}
+.term code{font:.95rem/1.7 ui-monospace,Menlo,Consolas,monospace;color:var(--accent)}
+.projects{display:grid;gap:1.25rem;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.term p{margin:.2rem 0 .8rem;color:var(--soft)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;padding:0;margin:0 0 .8rem;list-style:none}
+.chips li{font:600 .8rem var(--head);border:1px solid var(--accent2);color:var(--ink);border-radius:999px;padding:.1rem .7rem}
+
+footer{position:relative;z-index:1;padding:4rem 0 3rem;text-align:center}
+footer h2{margin-bottom:1rem}
+footer small{display:block;margin-top:2rem;color:var(--soft)}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}[data-theme="ocean"] .wave{animation:none}}
+</style>
+</head>
+<body>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<nav aria-label="Sections"><div class="wrap">
+  <a class="logo" href="#top">Your Name</a>
+  <a href="#work">Photography</a><a href="#about">About</a><a href="#skills">Skills</a><a href="#code">Coding</a>
+  <div class="switch" role="group" aria-label="Choose theme">
+    <button data-t="stars" aria-pressed="true">Stars</button>
+    <button data-t="ocean" aria-pressed="false">Ocean</button>
+  </div>
+</div></nav>
+
+<header class="hero" id="top"><div class="wrap">
+  <!-- EDIT: your name and tagline -->
+  <h1>Your<br>Name</h1>
+  <p>I photograph the quiet edges of the world, from night skies to open water, and I write code to go with it.</p>
+  <a class="btn" href="#work">See the photos</a><a class="btn ghost" href="#code">See the code</a>
+</div>
+<div class="horizon" aria-hidden="true">
+  <svg class="mtn" viewBox="0 0 1200 90" preserveAspectRatio="none"><path d="M0 90V60l80-30 70 28 90-45 80 40 70-20 90 35 80-45 90 40 70-25 100 40 80-30 100 35 80-20V90z"/></svg>
+  <svg class="wave" viewBox="0 0 1200 90" preserveAspectRatio="none"><path d="M0 50c100 0 100-30 200-30s100 30 200 30 100-30 200-30 100 30 200 30 100-30 200-30 100 30 200 30V90H0z"/></svg>
+</div></header>
+
+<main>
+<section class="s" id="work"><div class="wrap">
+  <h2>Photography</h2>
+  <p class="lead">A selection of favorites. Tap any frame to see it larger.</p>
+  <div class="filters" id="filters" role="group" aria-label="Filter photos"></div>
+  <div class="mosaic" id="grid"></div>
+</div></section>
+
+<section class="s" id="about"><div class="wrap">
+  <h2>About me</h2>
+  <div class="about">
+    <div class="portrait" role="img" aria-label="Portrait placeholder">Your portrait goes here</div>
+    <div>
+      <!-- EDIT: your story -->
+      <p>Hi, I’m Your Name. I got hooked on photography staying up late to catch the Milky Way, and I’ve been chasing dark skies and moving water ever since.</p>
+      <p>When I’m not shooting, I build software. The two feed each other: patience, attention to detail and a love of small tools that do one thing well.</p>
+      <div class="facts">
+        <div><b>Based in</b>Your city</div>
+        <div><b>Shooting since</b>2015</div>
+        <div><b>Available for</b>Commissions & prints</div>
+        <div><b>Email</b><a href="mailto:you@example.com">you@example.com</a></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section class="s" id="skills"><div class="wrap">
+  <h2>Skills</h2>
+  <p class="lead">What I’m good at, rated out of five.</p>
+  <div class="cols" id="skillCols"></div>
+</div></section>
+
+<section class="s" id="code"><div class="wrap">
+  <h2>Coding</h2>
+  <p class="lead">Projects where my two hobbies meet.</p>
+  <div class="projects">
+    <!-- EDIT: duplicate a block per project -->
+    <article class="term"><div class="bar"><i></i><i></i><i></i></div><div class="body">
+      <code>~/projects/project-name</code>
+      <p>One or two sentences on what it does and why you built it.</p>
+      <ul class="chips"><li>JavaScript</li><li>Node</li></ul>
+      <a href="#code">View on GitHub</a></div></article>
+    <article class="term"><div class="bar"><i></i><i></i><i></i></div><div class="body">
+      <code>~/projects/star-planner</code>
+      <p>Tells me when the Milky Way is above the horizon at my favorite spots.</p>
+      <ul class="chips"><li>Python</li><li>Astropy</li></ul>
+      <a href="#code">View on GitHub</a></div></article>
+    <article class="term"><div class="bar"><i></i><i></i><i></i></div><div class="body">
+      <code>~/projects/this-site</code>
+      <p>This portfolio: one HTML file, no frameworks, two themes.</p>
+      <ul class="chips"><li>HTML</li><li>CSS</li><li>Canvas</li></ul>
+      <a href="#code">View source</a></div></article>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <h2>Let’s work together</h2>
+  <a class="btn" href="mailto:you@example.com">Send an email</a><a class="btn ghost" href="#">Instagram</a>
+  <small>© <span id="yr"></span> Your Name</small>
+</div></footer>
+
+<dialog id="lb" aria-label="Photo viewer">
+  <div id="lbImg"></div>
+  <div class="info"><div><h3 id="lbTitle"></h3><p id="lbMeta"></p></div><button class="close" id="lbClose">Close</button></div>
+</dialog>
+
+<script>
+/* ---------- PHOTOS ----------
+   Photos are listed in photos.json (same folder as this file) and the image
+   files live in the images/ folder. If photos.json can't be loaded
+   (e.g. you opened this file straight from your computer), the colour
+   placeholders below are shown instead. */
+var PHOTOS=[
+ {title:"Milky Way over the ridge",category:"Night sky",cs:2,rs:2,info:"14mm · f/2.8 · 20s · ISO 3200"},
+ {title:"Low tide at dawn",category:"Ocean",info:"24mm · f/11 · 1/60"},
+ {title:"Star trails",category:"Night sky",rs:2,info:"20mm · f/2.8 · 90 min stack"},
+ {title:"Breaking wave",category:"Ocean",info:"70mm · f/5.6 · 1/1000"},
+ {title:"Harbor lights",category:"Street",cs:2,info:"35mm · f/2 · 1/125"}
+];
+function url(p){return 'url("images/'+encodeURI(p.file).replace(/'/g,"%27")+'")'}
+function bg(i){
+  var p=PHOTOS[i];
+  if(p&&p.file)return "#0b0f2a center/cover no-repeat "+url(p);
+  var ocean=document.documentElement.dataset.theme==="ocean",h=(ocean?180:255)+(i*9)%40,
+      a=ocean?32+(i*7)%22:30+(i*5)%20,b=ocean?14+(i*3)%14:12+(i*4)%14;
+  return "linear-gradient("+(110+i*31)+"deg,hsl("+h+",55%,"+a+"%),hsl("+(h+25)+",60%,"+b+"%))";
+}
+function bgFull(i){var p=PHOTOS[i];return p&&p.file?"#0b0f2a center/contain no-repeat "+url(p):bg(i)}
+var grid=document.getElementById("grid"),filters=document.getElementById("filters"),lb=document.getElementById("lb"),cur="All";
+function render(){
+  grid.innerHTML="";
+  PHOTOS.forEach(function(p,i){
+    if(cur!=="All"&&p.category!==cur)return;
+    var b=document.createElement("button");b.className="shot";
+    b.style.cssText="--cs:"+(p.cs||1)+";--rs:"+(p.rs||1)+";background:"+bg(i);
+    b.setAttribute("aria-label","Open "+p.title);
+    var s=document.createElement("span");s.textContent=p.title;b.appendChild(s);
+    b.onclick=function(){
+      document.getElementById("lbImg").style.background=bgFull(i);
+      document.getElementById("lbTitle").textContent=p.title;
+      document.getElementById("lbMeta").textContent=[p.category,p.info].filter(Boolean).join(" · ");
+      lb.showModal();
+    };
+    grid.appendChild(b);
+  });
+}
+function buildFilters(){
+  filters.innerHTML="";cur="All";
+  var cats=["All"].concat(PHOTOS.map(function(p){return p.category}).filter(function(v,i,a){return v&&a.indexOf(v)===i}));
+  cats.forEach(function(c,i){
+    var b=document.createElement("button");b.textContent=c;b.setAttribute("aria-pressed",i===0);
+    b.onclick=function(){cur=c;[].forEach.call(filters.children,function(x){x.setAttribute("aria-pressed",x===b)});render()};
+    filters.appendChild(b);
+  });
+}
+function loadPhotos(){
+  fetch("photos.json").then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(list){
+    if(Array.isArray(list)&&list.length){PHOTOS=list;buildFilters();render()}
+  }).catch(function(){});
+}
+document.getElementById("lbClose").onclick=function(){lb.close()};
+lb.addEventListener("click",function(e){if(e.target===lb)lb.close()});
+
+/* ---------- SKILLS (EDIT names and levels 1–5) ---------- */
+var SK={"Photography":[["Astrophotography",5],["Seascapes",4],["Portraits",4],["Street",3],["Lightroom & Photoshop",5]],
+        "Technical":[["JavaScript",4],["Python",4],["HTML & CSS",5],["Git",3]]};
+var sc=document.getElementById("skillCols");
+Object.keys(SK).forEach(function(g){
+  var d=document.createElement("div"),h=document.createElement("h3");h.textContent=g;d.appendChild(h);
+  SK[g].forEach(function(s){
+    var r=document.createElement("div");r.className="skill";
+    var n=document.createElement("span");n.textContent=s[0];
+    var dots=document.createElement("span");dots.className="dots";dots.setAttribute("aria-label",s[1]+" out of 5");
+    for(var k=1;k<=5;k++){var i=document.createElement("i");if(k<=s[1])i.className="on";dots.appendChild(i)}
+    r.appendChild(n);r.appendChild(dots);d.appendChild(r);
+  });
+  sc.appendChild(d);
+});
+
+/* ---------- THEME ---------- */
+var sw=[].slice.call(document.querySelectorAll(".switch button"));
+function setTheme(t){
+  document.documentElement.dataset.theme=t;
+  sw.forEach(function(b){b.setAttribute("aria-pressed",b.dataset.t===t)});
+  initFx();render();
+}
+sw.forEach(function(b){b.onclick=function(){setTheme(b.dataset.t)}});
+
+/* ---------- BACKGROUND: stars or bubbles ---------- */
+var cv=document.getElementById("fx"),cx=cv.getContext("2d"),W,H,parts=[],shoot=null,raf,
+    still=matchMedia("(prefers-reduced-motion:reduce)").matches;
+function initFx(){
+  W=cv.width=innerWidth;H=cv.height=innerHeight;
+  var ocean=document.documentElement.dataset.theme==="ocean",n=Math.round(W*H/(ocean?18000:6000));
+  parts=[];
+  for(var i=0;i<n;i++)parts.push({x:Math.random()*W,y:Math.random()*H,r:ocean?2+Math.random()*7:Math.random()*1.5+.3,p:Math.random()*6.28,v:.2+Math.random()*.6});
+  cancelAnimationFrame(raf);frame(0);
+}
+function frame(t){
+  var ocean=document.documentElement.dataset.theme==="ocean";
+  cx.clearRect(0,0,W,H);
+  parts.forEach(function(s){
+    if(ocean){
+      if(!still){s.y-=s.v;s.x+=Math.sin(t/900+s.p)*.3;if(s.y<-10){s.y=H+10;s.x=Math.random()*W}}
+      cx.beginPath();cx.arc(s.x,s.y,s.r,0,6.28);cx.strokeStyle="rgba(158,230,230,.35)";cx.lineWidth=1;cx.stroke();
+      cx.fillStyle="rgba(200,255,250,.06)";cx.fill();
+    }else{
+      cx.globalAlpha=still?.8:.45+.55*Math.abs(Math.sin(t/1200*s.v+s.p));
+      cx.fillStyle="#fff";cx.beginPath();cx.arc(s.x,s.y,s.r,0,6.28);cx.fill();
+    }
+  });
+  cx.globalAlpha=1;
+  if(!ocean&&!still){
+    if(!shoot&&Math.random()<.004)shoot={x:Math.random()*W*.8,y:Math.random()*H*.4,l:0};
+    if(shoot){
+      var g=cx.createLinearGradient(shoot.x,shoot.y,shoot.x-90,shoot.y-45);
+      g.addColorStop(0,"rgba(255,255,255,.9)");g.addColorStop(1,"rgba(255,255,255,0)");
+      cx.strokeStyle=g;cx.lineWidth=2;cx.beginPath();cx.moveTo(shoot.x,shoot.y);cx.lineTo(shoot.x-90,shoot.y-45);cx.stroke();
+      shoot.x+=14;shoot.y+=7;if(++shoot.l>60)shoot=null;
+    }
+  }
+  if(!still)raf=requestAnimationFrame(frame);
+}
+addEventListener("resize",initFx);
+document.getElementById("yr").textContent=new Date().getFullYear();
+buildFilters();render();initFx();loadPhotos();
+</script>
+</body>
+</html>
